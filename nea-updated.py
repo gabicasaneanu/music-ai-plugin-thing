@@ -74,6 +74,68 @@ amount_entries = len(arr)*aug
 np_mfcc = np.empty((amount_entries, 9, 13))
 
 
+if 'np_mfcc.npy' in os.listdir():
+	print('loading saved data')
+	np_mfcc = load('np_mfcc.npy')
+	sample_list = load('sample_list.npy')
+else:
+	for i in range(len(arr)): 
+
+		
+		sound = AudioSegment.from_file(arr[i], format="wav", channels=1)
+		sound = sound.set_channels(1)
+		
+		pitched_sounds = []
+		augmentor(sound,aug)
+
+
+		for x in range(len(pitched_sounds)):
+
+			
+			if re.search("kicks",arr[i]):
+				sample_list.append(0)
+			elif re.search("snares",arr[i]):
+				sample_list.append(1)
+			elif re.search("clap",arr[i]):	
+				sample_list.append(2)
+			else:	
+				sample_list.append(3)
+
+
+			sound = pitched_sounds[x][:sample_length]
+
+			samples = sound.get_array_of_samples()
+
+
+			if len(samples) < ms_samples(sample_length):
+				padding_samples = ms_samples(sample_length) - len(samples) 
+				for dumi in range(padding_samples):
+					samples.append(0)
+
+
+			
+			samples = np.array(samples)
+			samples = samples.astype(float)
+			mfcc = librosa.feature.mfcc(samples, n_fft=n_fft, hop_length=hop_length, n_mfcc=13)
+			mfcc = mfcc.T
+			
+			mfcc = np.expand_dims(mfcc, axis=0)
+
+			
+			np_mfcc[i*aug+x] = mfcc
+				
+
+
+		if i % 100 == 0:
+			print(np.floor((i*100)/len(arr)))
+	save('np_mfcc.npy', np_mfcc)
+	sample_list = np.array(sample_list)
+	save('sample_list.npy', sample_list)
+
+
+np_mfcc = np.expand_dims(np_mfcc, axis=3)
+
+
 
 
 
