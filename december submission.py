@@ -1,4 +1,7 @@
-
+from numpy import asarray
+from numpy import save
+from numpy import load
+import librosa, librosa.display
 import os
 from pydub import AudioSegment
 from pydub.playback import play
@@ -9,10 +12,7 @@ import re
 import functools
 print = functools.partial(print, flush=True)
 import matplotlib.pyplot as plt
-from numpy import asarray
-from numpy import save
-from numpy import load
-import librosa, librosa.display
+
 
 
 
