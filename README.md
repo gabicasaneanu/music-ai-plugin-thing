@@ -1,4 +1,4 @@
-# december submission
+# december submission (table in readme)
 
 things i have completed from my requirements:
 Upload .mp3 or .wav files from an external directory into python. This may be done using the pydub library, in order to retrieve and manipulate audio files.
