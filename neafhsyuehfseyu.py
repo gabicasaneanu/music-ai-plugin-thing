@@ -1,3 +1,4 @@
+ 
 
 import tensorflow as tf
 from tensorflow.keras import regularizers
@@ -35,7 +36,7 @@ def sound_aug():
     else:
         for i in range(len(arr)):  
     
-          
+            print("notfoun")
             sound = AudioSegment.from_file(arr[i], format='wav', channels=1)
             sound = sound.set_channels(1)
     
@@ -55,10 +56,10 @@ def __main__():
     def dir_set():
         def __dir__():
             class_names = ['kick', 'snare', 'clap', 'hihat']
-            train_path_list = ['kicks\\', 'snares\\', 'claps\\',
-                               'hats\\']
-            test_path_list = ['kicks\\', 'snares\\', 'claps\\',
-                              'hats\\']
+            train_path_list = ['kickdrum', 'snaredrum', 'claps',
+                               'hats']
+            test_path_list = ['hats', 'snaredrum', 'claps',
+                              'kickdrum']
             return class_names, test_path_list, train_path_list
         
         class_names, test_path_list, train_path_list = __dir__()
